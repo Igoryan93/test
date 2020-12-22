@@ -11,6 +11,11 @@
 <body>
     <?php echo "Header" . "<br>" ?>
 
+    <ul>
+        <li><a href="/home">Home page</a></li>
+        <li><a href="/about/<?=$this->e($id['id'])?>">About</a></li>
+    </ul>
+
     <?=$this->section('content')?>
 
     <?php echo "Footer" . "<br>" ?>

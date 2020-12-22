@@ -17,8 +17,8 @@ class QueryBuilder {
         $select = $this->queryFactory->newSelect();
         $select->cols(['*'])
                ->from($table)
-               ->where('username = :username')
-               ->bindValue('username', $data['username']);
+               ->where('id = :id')
+               ->bindValue('id', $data[2]);
         $sth = $this->pdo->prepare($select->getStatement());
         $sth->execute($select->getBindValues());
         $result = $sth->fetch(PDO::FETCH_ASSOC);
