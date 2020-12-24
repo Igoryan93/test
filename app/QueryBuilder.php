@@ -4,7 +4,6 @@ namespace App;
 use Aura\SqlQuery\QueryFactory;
 use PDO;
 
-
 class QueryBuilder {
     private  $queryFactory, $pdo;
 
@@ -22,6 +21,18 @@ class QueryBuilder {
         $sth = $this->pdo->prepare($select->getStatement());
         $sth->execute($select->getBindValues());
         $result = $sth->fetch(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+    public function getLimit($table, $vars) {
+        $select = $this->queryFactory->newSelect();
+        $select->cols(['*'])
+                ->from($table)
+                ->setPaging(3)
+                ->page($vars['page']);
+        $sth = $this->pdo->prepare($select->getStatement());
+        $sth->execute($select->getBindValues());
+        $result = $sth->fetchAll(PDO::FETCH_ASSOC);
         return $result;
     }
 

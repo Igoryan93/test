@@ -3,11 +3,8 @@
 if( !session_id() ) @session_start();
 
 require_once "../vendor/autoload.php";
-
-use League\Plates\Engine;
-
-use \Tamtamchik\SimpleFlash\Flash;
-
+use DI\Container;
+$container = new Container;
 
 //$templates = new Engine('../app/views/');
 //
@@ -27,7 +24,14 @@ use \Tamtamchik\SimpleFlash\Flash;
 /* Routing */
 $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
     $r->addRoute('GET', '/home', ['App\Controllers\HomeController', 'index']);
-    $r->addRoute('GET', '/about/{id:\d+}', ['App\Controllers\HomeController', 'about']);
+    $r->addRoute('GET', '/about', ['App\Controllers\HomeController', 'about']);
+    $r->addRoute('GET', '/emailverify', ['App\Controllers\HomeController', 'email_verification']);
+    $r->addRoute('GET', '/login', ['App\Controllers\HomeController', 'login']);
+    $r->addRoute('GET', '/logout', ['App\Controllers\HomeController', 'logOut']);
+    $r->addRoute('GET', '/mailer', ['App\Controllers\HomeController', 'sendEmail']);
+    $r->addRoute('GET', '/insert', ['App\Controllers\HomeController', 'insert']);
+    $r->addRoute('GET', '/page/{page:\d+}', ['App\Controllers\HomeController', 'index']);
+
 });
 
 // Fetch method and URI from somewhere
@@ -53,8 +57,8 @@ switch ($routeInfo[0]) {
     case FastRoute\Dispatcher::FOUND:
         $handler = $routeInfo[1];
         $vars = $routeInfo[2];
-        $controller = new $handler[0];
-        call_user_func([$controller, $handler[1]], $vars);
+        $cont = $container->call($routeInfo[1], $routeInfo[2]);
+        d($cont);
         break;
 }
 

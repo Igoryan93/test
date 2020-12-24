@@ -1,13 +1,15 @@
-<?php $this->layout('layout', ['title' => 'about']) ?>
+<?php $this->layout('layout', ['title' => 'Home']) ?>
 
-<h1>Home page</h1>
+
+<h1>Home page </h1>
 <ul>
+
 <?php foreach ($posts as $item): ?>
     <li>
-        <?php echo $item['username'] ?>
-        <?php echo $item['email'] ?>
-        <?php echo $item['txt'] ?>
-        <?php echo $item['date'] ?>
+        <?php echo $item['title'] ."<br>" . $item['text'] ?>
     </li>
 <?php endforeach; ?>
+
+
 </ul>
+
